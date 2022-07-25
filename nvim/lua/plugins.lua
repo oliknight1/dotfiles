@@ -1,86 +1,110 @@
-local Plug = vim.fn['plug#']
 
--- TODO: Convert to packer 
-vim.call('plug#begin', '~/.config/nvim/plugged')
+vim.cmd [[packadd packer.nvim]]
+vim.cmd([[
+augroup packer_user_config
+autocmd!
+autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+augroup end
+]])
 
--- smooth scroll
-Plug 'psliwka/vim-smoothie'
+return require('packer').startup(function(use)
+	use 'wbthomason/packer.nvim'
+	-- smooth scroll
+	use 'psliwka/vim-smoothie'
 
--- Themes
--- Plug 'dracula/vim'
- Plug 'ntk148v/vim-horizon'
--- Plug 'kyoz/purify', { 'rtp': 'vim' }
--- Plug 'tomasr/molokai'
-Plug 'morhetz/gruvbox'
-Plug 'EdenEast/nightfox.nvim'
--- Plug 'sainnhe/sonokai'
--- Plug 'sainnhe/gruvbox-material'
+	-- Themes
+	use 'ntk148v/vim-horizon'
+	use 'morhetz/gruvbox'
+	use 'EdenEast/nightfox.nvim'
 
--- File Explorer with Icons
--- Plug 'scrooloose/erdtree'
--- Plug 'ryanoasis/vim-devicons'
-Plug 'kyazdani42/nvim-web-devicons' -- optional, for file icons
-Plug 'kyazdani42/nvim-tree.lua'
+	-- File Explorer with Icons
+	use 'kyazdani42/nvim-tree.lua'
 
--- Commenter
-Plug 'numToStr/Comment.nvim'
+	-- Commenter
+	use {
+		'numToStr/Comment.nvim',
+		config = function()
+			require('Comment').setup()
+		end
+	}
 
---Airline themes
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+	--Airline themes
+	use 'vim-airline/vim-airline'
+	use 'vim-airline/vim-airline-themes'
 
--- react stuff
-Plug 'MaxMEllon/vim-jsx-pretty'
+	-- react stuff
+	use 'MaxMEllon/vim-jsx-pretty'
 
-Plug 'neoclide/vim-jsx-improve'
+	use 'neoclide/vim-jsx-improve'
 
--- Emmet
-Plug 'mattn/emmet-vim'
+	-- Emmet
+	use 'mattn/emmet-vim'
 
--- Surronding w/ brackets
-Plug 'kylechui/nvim-surround'
+	-- Auto pair
+	use 'jiangmiao/auto-pairs'
+	-- Surronding w/ brackets
+	use 'kylechui/nvim-surround'
 
---Git client
-Plug 'tpope/vim-fugitive'
+	--Git client
+	use 'tpope/vim-fugitive'
 
---Treesitter
-Plug('nvim-treesitter/nvim-treesitter', {['do'] = vim.fn[':TSUpdate']})
+	--Treesitter
+	use {
+		'nvim-treesitter/nvim-treesitter',
+		run = ':TSUpdate'
+	}
 
--- LSP Support
-Plug 'neovim/nvim-lspconfig'
-Plug 'williamboman/nvim-lsp-installer'
+	-- LSP Support
+	use 'neovim/nvim-lspconfig'
+	use 'williamboman/nvim-lsp-installer'
 
--- Autocompletion
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'saadparwaiz1/cmp_luasnip'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-nvim-lua'
+	-- Autocompletion
+	use 'hrsh7th/nvim-cmp'
+	use 'hrsh7th/cmp-buffer'
+	use 'hrsh7th/cmp-path'
+	use 'saadparwaiz1/cmp_luasnip'
+	use 'hrsh7th/cmp-nvim-lsp'
+	use 'hrsh7th/cmp-nvim-lua'
 
---  Snippets
-Plug 'L3MON4D3/LuaSnip'
-Plug 'rafamadriz/friendly-snippets'
+	--  Snippets
+	use 'L3MON4D3/LuaSnip'
+	use 'rafamadriz/friendly-snippets'
 
-Plug 'VonHeikemen/lsp-zero.nvim'
+	use 'VonHeikemen/lsp-zero.nvim'
 
---LSP UI
-Plug 'glepnir/lspsaga.nvim'
+	--LSP UI
+	use 'glepnir/lspsaga.nvim'
 
--- telescope fzf
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'kyazdani42/nvim-web-devicons'
+	-- telescope fzf
+	use 'nvim-lua/popup.nvim'
+	use 'nvim-lua/plenary.nvim'
+	use 'nvim-telescope/telescope.nvim'
+	use 'kyazdani42/nvim-web-devicons'
 
-Plug 'windwp/nvim-ts-autotag'
+	use 'windwp/nvim-ts-autotag'
 
--- Debugger
-Plug 'mfussenegger/nvim-dap'
-Plug 'rcarriga/nvim-dap-ui'
-Plug 'theHamsta/nvim-dap-virtual-text'
+	-- Debugger
+	use 'mfussenegger/nvim-dap'
+	use 'rcarriga/nvim-dap-ui'
+	use 'theHamsta/nvim-dap-virtual-text'
 
---Line error msg
-Plug 'Maan2003/lsp_lines.nvim'
+	--Line error msg
+	use 'Maan2003/lsp_lines.nvim'
 
-vim.call('plug#end')
+	-- Package manager 
+	use {
+		"williamboman/mason.nvim",
+		config = function()
+			require('mason').setup()
+		end
+	}
+
+	use {
+		'akinsho/bufferline.nvim',
+		tag = "v2.*",
+		config = function()
+			require('bufferline').setup()
+		end
+	}
+end)
+
