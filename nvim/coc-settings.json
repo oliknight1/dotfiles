@@ -1,5 +1,0 @@
-{
-	"eslint.alwaysShowStatus": true,
-	"eslint.autoFixOnSave": true,
-	"typescript.suggestionActions.enabled": false
-}

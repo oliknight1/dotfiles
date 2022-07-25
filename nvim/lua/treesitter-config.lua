@@ -1,12 +1,9 @@
 
 
-if !exists('g:loaded_nvim_treesitter')
-  echom "Not loaded treesitter"
-  finish
-endif
-
-lua <<EOF
 require'nvim-treesitter.configs'.setup {
+  autotag = {
+    enable = true,
+  },
   highlight = {
     enable = true,
     disable = {},
@@ -24,13 +21,12 @@ require'nvim-treesitter.configs'.setup {
     "yaml",
     "html",
     "scss",
-		"go"
+		"go",
+		"javascript",
+		"typescript"
   },
-  autotag = {
-    enable = true,
-  }
 }
 
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
-EOF
+require('nvim-ts-autotag').setup()
