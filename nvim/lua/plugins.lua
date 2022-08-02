@@ -16,6 +16,7 @@ return require('packer').startup(function(use)
 	use 'ntk148v/vim-horizon'
 	use 'morhetz/gruvbox'
 	use 'EdenEast/nightfox.nvim'
+--	use 'Shatur/neovim-ayu'
 
 	-- File Explorer with Icons
 	use 'kyazdani42/nvim-tree.lua'

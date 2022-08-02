@@ -38,6 +38,7 @@ vim.opt.incsearch = true
 
 -- Theme settings
 vim.o.termguicolors = true
+
 vim.cmd("colorscheme horizon")
 vim.o.guifont='font-hack-nerd-font'
 
