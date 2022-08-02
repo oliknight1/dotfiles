@@ -8,6 +8,6 @@ require("nvim-tree-config")
 require("treesitter-config")
 require("dap-config")
 require("surround")
-require("lsp-lines-config")
+require("autocmds")
 require('mappings')
 

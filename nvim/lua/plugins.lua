@@ -88,17 +88,6 @@ return require('packer').startup(function(use)
 	use 'rcarriga/nvim-dap-ui'
 	use 'theHamsta/nvim-dap-virtual-text'
 
-	--Line error msg
-	use 'Maan2003/lsp_lines.nvim'
-
-	-- Package manager 
-	use {
-		"williamboman/mason.nvim",
-		config = function()
-			require('mason').setup()
-		end
-	}
-
 	use {
 		'akinsho/bufferline.nvim',
 		tag = "v2.*",

@@ -116,10 +116,4 @@ local opt = { expr = true, remap = true }
 keymap('n', '<leader>cl', "v:count == 0 ? '<Plug>(comment_toggle_current_linewise)' : '<Plug>(comment_toggle_linewise_count)'", { noremap = true, silent = true, expr =true })
 keymap('n', '<leader>cb', "v:count == 0 ? '<Plug>(comment_toggle_current_blockwise)' : '<Plug>(comment_toggle_blockwise_count)'",{ noremap = true, silent = true, expr =true } )
 
--- Disable virtual_text since it's redundant due to lsp_lines.
-vim.diagnostic.config({
-  virtual_text = false,
-})
-
--- Add terminal function
 
