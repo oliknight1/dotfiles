@@ -1,4 +1,5 @@
 require('plugins')
+require("bufferline-config")
 require('telescope-config')
 require("auto-pairs")
 require("cmp-config")
@@ -9,5 +10,7 @@ require("treesitter-config")
 require("dap-config")
 require("surround")
 require("autocmds")
+require("themes")
+require("lualine-config")
 require('mappings')
 

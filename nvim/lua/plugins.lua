@@ -3,8 +3,7 @@ vim.cmd [[packadd packer.nvim]]
 vim.cmd([[
 augroup packer_user_config
 autocmd!
-autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-augroup end
+autocmd BufWritePost plugins.lua source <afile> | PackerCompile augroup end
 ]])
 
 return require('packer').startup(function(use)
@@ -16,7 +15,9 @@ return require('packer').startup(function(use)
 	use 'ntk148v/vim-horizon'
 	use 'morhetz/gruvbox'
 	use 'EdenEast/nightfox.nvim'
+	use 'navarasu/onedark.nvim'
 --	use 'Shatur/neovim-ayu'
+	use { "catppuccin/nvim", as = "catppuccin" }
 
 	-- File Explorer with Icons
 	use 'kyazdani42/nvim-tree.lua'
@@ -89,12 +90,26 @@ return require('packer').startup(function(use)
 	use 'rcarriga/nvim-dap-ui'
 	use 'theHamsta/nvim-dap-virtual-text'
 
+	-- Bufferline
+	use 'akinsho/bufferline.nvim'
+
+	-- Lualine
 	use {
-		'akinsho/bufferline.nvim',
-		tag = "v2.*",
-		config = function()
-			require('bufferline').setup()
-		end
+		'nvim-lualine/lualine.nvim',
+		requires = { 'kyazdani42/nvim-web-devicons', opt = true }
 	}
+	-- Indent line
+	use "lukas-reineke/indent-blankline.nvim"
+
+	use {
+  "folke/which-key.nvim",
+  config = function()
+    require("which-key").setup {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  end
+}
 end)
 

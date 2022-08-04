@@ -34,13 +34,14 @@ vim.o.mouse='a'
 vim.o.syntax ='on' 
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
+vim.opt.cursorline = true
+vim.opt.cursorlineopt = 'number'
 
 
 -- Theme settings
 vim.o.termguicolors = true
 
-vim.cmd("colorscheme horizon")
-vim.o.guifont='font-hack-nerd-font'
+vim.opt.guifont='font-hack-nerd-font'
 
 local keymap = vim.api.nvim_set_keymap
 
@@ -50,17 +51,34 @@ keymap('n','<C-k>','<c-w>k',{ noremap = true, silent = true })
 keymap('n','<C-h>','<c-w>h',{ noremap = true, silent = true })
 keymap('n','<C-l>','<c-w>l',{ noremap = true, silent = true })
 
--- Rebuild lua file
-vim.keymap.set("n", "<leader>lf", ":luafile %<CR>")
-
--- Emmet
-vim.g.user_emmet_leader_key = '<C-e>'
-
 -- Tab navigation
 keymap('','<leader>tt',':tabnew<CR>',{})
 keymap('','<leader>tn',':tabn<CR>',{})
 keymap('','<leader>tp',':tabp<CR>',{})
 keymap('','<leader>x',':clo<CR>',{})
+
+-- Buffer navigation 
+keymap('n','<leader>1','<cmd>BufferLineGoToBuffer 1<cr>', { noremap = true, silent = true })
+keymap('n','<leader>2','<cmd>BufferLineGoToBuffer 2<cr>', { noremap = true, silent = true })
+keymap('n','<leader>3', '<cmd>BufferLineGoToBuffer 3<cr>', { noremap = true, silent = true })
+keymap('n','<leader>4','<cmd>BufferLineGoToBuffer 4<cr>', { noremap = true, silent = true })
+keymap('n','<leader>5', '<cmd>BufferLineGoToBuffer 5<cr>', { noremap = true, silent = true })
+keymap('n','<leader>6', '<cmd>BufferLineGoToBuffer 6<cr>', { noremap = true, silent = true })
+keymap('n','<leader>7', '<cmd>BufferLineGoToBuffer 7<cr>', { noremap = true, silent = true })
+keymap('n','<leader>8', '<cmd>BufferLineGoToBuffer 8<cr>', { noremap = true, silent = true })
+keymap('n','<leader>9', '<cmd>BufferLineGoToBuffer 9<cr>', { noremap = true, silent = true })
+keymap('n','<leader>$', '<cmd>BufferLineGoToBuffer -1<cr>', { noremap = true, silent = true })
+keymap('n',"gb", "<cmd>BufferLinePick<CR>", {noremap=true,silent=true})
+--These commands will move the current buffer backwards or forwards in the bufferline
+keymap('n','b]','<cmd>BufferLineCycleNext<cr>',{ noremap = true, silent = true })
+keymap('n','b[','<cmd>BufferLineCyclePrev<cr>',{ noremap = true, silent = true })
+--Close buffer
+keymap('n','<leader>q', '<cmd>:bd<CR>', { noremap = true, silent = false });
+
+-- Rebuild lua file vim.keymap.set("n", "<leader>lf", ":luafile %<CR>")
+
+-- Emmet
+vim.g.user_emmet_leader_key = '<C-e>'
 
 -- Copy to clipboard 
 keymap('v','<C-c>','"*y',{ noremap = true, silent = true })
@@ -117,4 +135,14 @@ local opt = { expr = true, remap = true }
 keymap('n', '<leader>cl', "v:count == 0 ? '<Plug>(comment_toggle_current_linewise)' : '<Plug>(comment_toggle_linewise_count)'", { noremap = true, silent = true, expr =true })
 keymap('n', '<leader>cb', "v:count == 0 ? '<Plug>(comment_toggle_current_blockwise)' : '<Plug>(comment_toggle_blockwise_count)'",{ noremap = true, silent = true, expr =true } )
 
+local autocmd = vim.api.nvim_create_autocmd
+
+-- Don't auto commenting new lines
+autocmd("BufEnter", {
+  pattern = "*",
+  command = "set fo-=c fo-=r fo-=o",
+})
+
+-- Indent line toggle
+keymap('n','<leader>it','<cmd>IndentBlanklineToggle<cr>',{})
 
