@@ -18,9 +18,7 @@ return require('packer').startup(function(use)
 	use 'navarasu/onedark.nvim'
 --	use 'Shatur/neovim-ayu'
 	use { "catppuccin/nvim", as = "catppuccin" }
-
-	-- File Explorer with Icons
-	use 'kyazdani42/nvim-tree.lua'
+	use 'ntk148v/vim-horizon'
 
 	-- Commenter
 	use {
@@ -81,7 +79,11 @@ return require('packer').startup(function(use)
 	use 'nvim-lua/popup.nvim'
 	use 'nvim-lua/plenary.nvim'
 	use 'nvim-telescope/telescope.nvim'
+	use "nvim-telescope/telescope-file-browser.nvim"
 	use 'kyazdani42/nvim-web-devicons'
+	use 'norcalli/nvim-terminal.lua'
+	use 'camgraff/telescope-tmux.nvim'
+
 
 	use 'windwp/nvim-ts-autotag'
 
@@ -89,6 +91,7 @@ return require('packer').startup(function(use)
 	use 'mfussenegger/nvim-dap'
 	use 'rcarriga/nvim-dap-ui'
 	use 'theHamsta/nvim-dap-virtual-text'
+	use "nvim-telescope/telescope-dap.nvim"
 
 	-- Bufferline
 	use 'akinsho/bufferline.nvim'
@@ -100,6 +103,21 @@ return require('packer').startup(function(use)
 	}
 	-- Indent line
 	use "lukas-reineke/indent-blankline.nvim"
+
+	-- color fix
+	use 'folke/lsp-colors.nvim'
+
+	use {
+  "folke/trouble.nvim",
+  requires = "kyazdani42/nvim-web-devicons",
+  config = function()
+    require("trouble").setup {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  end
+}
 
 	use {
   "folke/which-key.nvim",

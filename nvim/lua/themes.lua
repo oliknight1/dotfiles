@@ -1,9 +1,9 @@
-vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
+vim.g.catppuccin_flavour = "macchiato" -- latte, frappe, macchiato, mocha
 
-require("catppuccin").setup()
-require("onedark").setup({
-	style = 'warmer'
-})
+-- require("catppuccin").setup()
+-- require("onedark").setup({
+	-- style = 'warmer'
+-- })
 
-vim.cmd [[colorscheme onedark]]
+vim.cmd [[colorscheme horizon]]
 

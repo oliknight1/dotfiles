@@ -16,17 +16,14 @@ require('bufferline').setup ({
 		diagnostic_selected = {
 			gui = "bold"
 		},
-
 		offsets = {
 			{
 				filetype = "NvimTree",
-				text = function()
-					return vim.fn.getcwd()
-				end,
+				text = "File Explorer",
 				highlight = "Directory",
-				text_align = "left",
-				padding = 1
+				text_align = "left"
 			}
 		}
+
 	}
 })
