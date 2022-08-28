@@ -69,7 +69,7 @@ keymap('n', '<leader>8', '<cmd>BufferLineGoToBuffer 8<cr>', { noremap = true, si
 keymap('n', '<leader>9', '<cmd>BufferLineGoToBuffer 9<cr>', { noremap = true, silent = true })
 keymap('n', '<leader>$', '<cmd>BufferLineGoToBuffer -1<cr>', { noremap = true, silent = true })
 keymap('n', "gb", "<cmd>BufferLinePick<CR>", { noremap = true, silent = true })
---These commands will move the current buffer backwards or forwards in the bufferline
+--These commandshorizon will move the current buffer backwards or forwards in the bufferline
 keymap('n', ']b', '<cmd>BufferLineCycleNext<cr>', { noremap = true, silent = true })
 keymap('n', '[b', '<cmd>BufferLineCyclePrev<cr>', { noremap = true, silent = true })
 --Close buffer
@@ -97,7 +97,9 @@ keymap("n", "<leader>g", ":lua require'telescope.builtin'.live_grep()<CR>", { no
 keymap("n", "<leader>e", ":lua require'telescope.builtin'.diagnostics()<CR>", { noremap = true, silent = true })
 keymap("n", "<leader>ot", ":Telescope<CR>", { noremap = true, silent = true })
 -- file browser
-keymap('n', '<leader>b', ':Telescope file_browser<CR>', { noremap = true, silent = true })
+keymap('n', '<leader>b',
+	":lua require'telescope.builtin'.find_files{ on_complete = { function() vim.cmd'stopinsert' end } }<CR>",
+	{ noremap = true, silent = true })
 
 -- Dap
 

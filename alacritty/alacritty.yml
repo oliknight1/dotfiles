@@ -117,7 +117,7 @@ font:
   bold:
     family: RobotoMono NF
     # family: JetBrains Mono
-    style: Bold
+    style: Regular
 
   italic:
     family: RobotoMono NF 
@@ -127,7 +127,7 @@ font:
   bold_italic:
     family: RobotoMono NF
     # family: JetBrains Mono
-    style: Bold Italic
+    style: Italic
 
   size: 11
 
