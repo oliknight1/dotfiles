@@ -87,8 +87,6 @@ keymap('v', '<C-c>', '"*y', { noremap = true, silent = true })
 -- Remove highlight after search
 keymap('n', '<leader>/', ':noh<CR>', { noremap = true, silent = true })
 
--- file browser
-keymap('n', '<leader>b', ':Telescope file_browser<CR>', { noremap = true, silent = true })
 
 --Cmp
 vim.o.completeopt = 'menuone,noinsert,noselect'
@@ -96,7 +94,10 @@ vim.o.completeopt = 'menuone,noinsert,noselect'
 -- Telescope
 keymap("n", "<leader>f", ":lua require'telescope.builtin'.find_files()<CR>", { noremap = true, silent = true })
 keymap("n", "<leader>g", ":lua require'telescope.builtin'.live_grep()<CR>", { noremap = true, silent = true })
+keymap("n", "<leader>e", ":lua require'telescope.builtin'.diagnostics()<CR>", { noremap = true, silent = true })
 keymap("n", "<leader>ot", ":Telescope<CR>", { noremap = true, silent = true })
+-- file browser
+keymap('n', '<leader>b', ':Telescope file_browser<CR>', { noremap = true, silent = true })
 
 -- Dap
 

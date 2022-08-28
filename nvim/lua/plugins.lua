@@ -12,7 +12,6 @@ return require('packer').startup(function(use)
 	use 'psliwka/vim-smoothie'
 
 	-- Themes
-	use 'ntk148v/vim-horizon'
 	use 'morhetz/gruvbox'
 	use 'EdenEast/nightfox.nvim'
 	use 'navarasu/onedark.nvim'
@@ -92,6 +91,7 @@ return require('packer').startup(function(use)
 	use 'rcarriga/nvim-dap-ui'
 	use 'theHamsta/nvim-dap-virtual-text'
 	use "nvim-telescope/telescope-dap.nvim"
+	use 'Samsung/netcoredbg'
 
 	-- Bufferline
 	use 'akinsho/bufferline.nvim'
@@ -106,18 +106,6 @@ return require('packer').startup(function(use)
 
 	-- color fix
 	use 'folke/lsp-colors.nvim'
-
-	use {
-  "folke/trouble.nvim",
-  requires = "kyazdani42/nvim-web-devicons",
-  config = function()
-    require("trouble").setup {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    }
-  end
-}
 
 	use {
   "folke/which-key.nvim",

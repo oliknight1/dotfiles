@@ -5,10 +5,10 @@
 #: kitty has very powerful font management. You can configure
 #: individual font faces and even specify special fonts for particular
 #: characters.
-
-# font_family      monospace
-# bold_font        auto
-# italic_font      auto
+ 
+font_family	  RobotoMono NF Regular
+bold_font         RobotoMono NF Bold 
+italic_font       RobotoMono NF Italic
 # bold_italic_font auto
 
 #: You can specify different fonts for the bold/italic/bold-italic
@@ -2168,6 +2168,6 @@ include Dark_Pastel.conf
 
 
 # BEGIN_KITTY_THEME
-# Alucard
+# One Dark
 include current-theme.conf
 # END_KITTY_THEME
