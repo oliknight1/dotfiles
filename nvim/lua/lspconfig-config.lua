@@ -27,10 +27,11 @@ nvim_lsp.tsserver.setup {
 }
 
 nvim_lsp.gopls.setup{}
+nvim_lsp.vuels.setup{}
 
 nvim_lsp.diagnosticls.setup {
   on_attach = on_attach,
-  filetypes = { 'javascript', 'javascriptreact', 'json', 'typescript', 'typescriptreact', 'cs$', 'less', 'scss', 'markdown', 'pandoc','go', 'gopls', 'gomod', 'gotmpl','vue' },
+  filetypes = { 'javascript', 'javascriptreact', 'json', 'typescript', 'typescriptreact', 'cs$', 'less', 'scss', 'markdown', 'pandoc','go', 'gopls', 'gomod', 'gotmpl','vuels','vue', 'volar' },
   init_options = {
     linters = {
       eslint = {

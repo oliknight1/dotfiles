@@ -12,12 +12,12 @@ return require('packer').startup(function(use)
 	use 'psliwka/vim-smoothie'
 
 	-- Themes
+	use 'ntk148v/vim-horizon'
 	use 'morhetz/gruvbox'
 	use 'EdenEast/nightfox.nvim'
 	use 'navarasu/onedark.nvim'
 --	use 'Shatur/neovim-ayu'
 	use { "catppuccin/nvim", as = "catppuccin" }
-	use 'ntk148v/vim-horizon'
 
 	-- Commenter
 	use {
@@ -91,7 +91,6 @@ return require('packer').startup(function(use)
 	use 'rcarriga/nvim-dap-ui'
 	use 'theHamsta/nvim-dap-virtual-text'
 	use "nvim-telescope/telescope-dap.nvim"
-	use 'Samsung/netcoredbg'
 
 	-- Bufferline
 	use 'akinsho/bufferline.nvim'
@@ -104,9 +103,24 @@ return require('packer').startup(function(use)
 	-- Indent line
 	use "lukas-reineke/indent-blankline.nvim"
 
-	-- color fix
-	use 'folke/lsp-colors.nvim'
+	-- Easy Motion
+	use {
+  'phaazon/hop.nvim',
+  branch = 'v2', -- optional but strongly recommended
+  config = function()
+    -- you can configure Hop the way you like here; see :h hop-config
+    require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+  end
+}
 
+use {
+'nvim-treesitter/nvim-treesitter-context',
+  config = function()
+    -- you can configure Hop the way you like here; see :h hop-config
+    require'treesitter-context'.setup()
+	end
+
+}
 	use {
   "folke/which-key.nvim",
   config = function()

@@ -18,3 +18,5 @@ highlight TelescopeResultsBorder guibg=bg guifg=bg
 highlight TelescopePreviewBorder guibg=bg guifg=bg
 
 highlight NvimTreeRootFolder guibg=bg guifg=#FFFFFF
+
+highlight DiagnosticError ctermfg=1 guifg=Red guibg=#ff000066

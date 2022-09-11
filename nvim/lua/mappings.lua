@@ -97,9 +97,7 @@ keymap("n", "<leader>g", ":lua require'telescope.builtin'.live_grep()<CR>", { no
 keymap("n", "<leader>e", ":lua require'telescope.builtin'.diagnostics()<CR>", { noremap = true, silent = true })
 keymap("n", "<leader>ot", ":Telescope<CR>", { noremap = true, silent = true })
 -- file browser
-keymap('n', '<leader>b',
-	":lua require'telescope.builtin'.find_files{ on_complete = { function() vim.cmd'stopinsert' end } }<CR>",
-	{ noremap = true, silent = true })
+keymap("n", "<leader>b", ":Telescope file_browser<CR>", { noremap = true, silent = true })
 
 -- Dap
 
@@ -129,8 +127,8 @@ vim.api.nvim_exec([[ au BufEnter * if &buftype == 'terminal' | :startinsert | en
 
 vim.api.nvim_exec([[
 function! OpenTerminal()
-	split term://fish
-	resize 10
+split term://fish
+resize 10
 endfunction
 nnoremap <c-n> :call OpenTerminal()<CR>
 ]], false)
@@ -162,22 +160,16 @@ vim.diagnostic.config({
 	virtual_text = true,
 })
 
--- Troulbe
-keymap("n", "<leader>tx", "<cmd>Trouble<cr>",
-	{ silent = true, noremap = true }
-)
-keymap("n", "<leader>tw", "<cmd>Trouble workspace_diagnostics<cr>",
-	{ silent = true, noremap = true }
-)
-keymap("n", "<leader>td", "<cmd>Trouble document_diagnostics<cr>",
-	{ silent = true, noremap = true }
-)
-keymap("n", "<leader>tl", "<cmd>Trouble loclist<cr>",
-	{ silent = true, noremap = true }
-)
-keymap("n", "<leader>tq", "<cmd>Trouble quickfix<cr>",
-	{ silent = true, noremap = true }
-)
-keymap("n", "gR", "<cmd>Trouble lsp_references<cr>",
-	{ silent = true, noremap = true }
-)
+-- Easy motion
+keymap('', 'f',
+	"<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>"
+	, {})
+keymap('', 'F',
+	"<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>"
+	, {})
+keymap('', 't',
+	"<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })<cr>"
+	, {})
+keymap('', 'T',
+	"<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })<cr>"
+	, {})
