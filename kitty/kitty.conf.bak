@@ -24,7 +24,7 @@ italic_font       RobotoMono NF Italic
 #:     italic_font      Operator Mono Book Italic
 #:     bold_italic_font Operator Mono Medium Italic
 
-# font_size 11.0
+ font_size 14.0
 
 #: Font size (in pts)
 
@@ -963,6 +963,7 @@ italic_font       RobotoMono NF Italic
 
 #: }}}
 include Dark_Pastel.conf
+# background #5a5b5e
 #: Color scheme {{{
 
 # foreground #dddddd
@@ -2171,3 +2172,5 @@ include Dark_Pastel.conf
 # One Dark
 include current-theme.conf
 # END_KITTY_THEME
+map cmd+c copy_to_clipboard
+alias nvim="~/nvim-macos/bin/nvim"

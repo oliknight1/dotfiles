@@ -16,8 +16,13 @@ return require('packer').startup(function(use)
 	use 'morhetz/gruvbox'
 	use 'EdenEast/nightfox.nvim'
 	use 'navarasu/onedark.nvim'
---	use 'Shatur/neovim-ayu'
+	use 'Shatur/neovim-ayu'
 	use { "catppuccin/nvim", as = "catppuccin" }
+	use 'folke/tokyonight.nvim'
+	use 'B4mbus/oxocarbon-lua.nvim'
+	use 'sam4llis/nvim-tundra'
+
+
 
 	-- Commenter
 	use {
@@ -105,31 +110,47 @@ return require('packer').startup(function(use)
 
 	-- Easy Motion
 	use {
-  'phaazon/hop.nvim',
-  branch = 'v2', -- optional but strongly recommended
-  config = function()
-    -- you can configure Hop the way you like here; see :h hop-config
-    require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-  end
-}
+		'phaazon/hop.nvim',
+		branch = 'v2', -- optional but strongly recommended
+		config = function()
+			-- you can configure Hop the way you like here; see :h hop-config
+			require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+		end
+	}
 
-use {
-'nvim-treesitter/nvim-treesitter-context',
-  config = function()
-    -- you can configure Hop the way you like here; see :h hop-config
-    require'treesitter-context'.setup()
-	end
+	use {
+		'nvim-treesitter/nvim-treesitter-context',
+		config = function()
+			-- you can configure Hop the way you like here; see :h hop-config
+			require'treesitter-context'.setup()
+		end
 
+	}
+
+	-- Git signs
+	use {
+		'lewis6991/gitsigns.nvim',
+		config = function()
+			require('gitsigns').setup()
+		end
+	}
+
+	-- Welcome message
+	use {
+    'goolord/alpha-nvim',
+    config = function ()
+        require'alpha'.setup(require'alpha.themes.dashboard'.config)
+    end
 }
 	use {
-  "folke/which-key.nvim",
-  config = function()
-    require("which-key").setup {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    }
-  end
-}
+		"folke/which-key.nvim",
+		config = function()
+			require("which-key").setup {
+				-- your configuration comes here
+				-- or leave it empty to use the default settings
+				-- refer to the configuration section below
+			}
+		end
+	}
 end)
 

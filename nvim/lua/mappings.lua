@@ -12,7 +12,6 @@ vim.o.relativenumber = true
 vim.o.cmdheight = 2
 vim.o.splitright = true
 vim.o.splitbelow = true
-vim.o.shiftwidth = 4
 vim.o.nu = true
 vim.o.hidden = true
 vim.o.errorbells = false
@@ -22,24 +21,24 @@ vim.o.splitright = true
 vim.o.splitbelow = true
 vim.o.autoindent = true
 vim.o.smartindent = true
-vim.o.expandtab = false
-vim.o.tabstop = 2
+
+vim.o.expandtab = true 
+vim.o.tabstop = 8
+vim.o.softtabstop=0
 vim.o.shiftwidth = 2
+vim.o.smarttab = true
 vim.o.laststatus = 2
 vim.o.foldmethod = 'manual'
-vim.o.background = 'dark'
-vim.o.shell = 'fish'
+vim.o.shell = '/opt/homebrew/bin/fish'
 vim.g.mapleader = " "
 vim.o.mouse = 'a'
 vim.o.syntax = 'on'
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 vim.opt.cursorline = true
+
 vim.opt.cursorlineopt = 'number'
 
-
--- Theme settings
-vim.o.termguicolors = true
 
 vim.opt.guifont = 'font-hack-nerd-font'
 
@@ -86,6 +85,17 @@ keymap('v', '<C-c>', '"*y', { noremap = true, silent = true })
 
 -- Remove highlight after search
 keymap('n', '<leader>/', ':noh<CR>', { noremap = true, silent = true })
+
+-- Lsp settings
+keymap('n', 'd]', '<Cmd> lua vim.diagnostic.goto_next()<CR>', { noremap = true, silent = true })
+keymap('n', 'd[', '<Cmd> lua vim.diagnostic.goto_prev()<CR>', { noremap = true, silent = true })
+keymap('n', 'do', '<Cmd> lua vim.diagnostic.open_float()<CR>', { noremap = true, silent = true })
+local opts = { noremap=true, silent=true }
+keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+keymap('n', 'ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+
 
 
 --Cmp

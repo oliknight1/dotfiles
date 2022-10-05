@@ -1,8 +1,9 @@
+eval $(/opt/homebrew/bin/brew shellenv)
 if status is-interactive
-    # Commands to run in interactive sessions can go here
-end
-if type -q exa
-  alias ll "exa -l -g --icons"
-  alias lla "ll -a"
+and not set -q TMUX
+    exec tmux
 end
 
+function fish_greeting
+  fish_logo blue cyan green
+end

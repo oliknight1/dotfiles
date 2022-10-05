@@ -13,15 +13,12 @@ require'nvim-treesitter.configs'.setup {
     disable = {},
   },
   ensure_installed = {
-    "tsx",
     "toml",
     "fish",
-    "php",
     "json",
     "yaml",
     "html",
     "scss",
-		"go",
 		"javascript",
 		"typescript"
   },
