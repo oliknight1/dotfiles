@@ -1,96 +1,155 @@
-
 local nvim_lsp = require('lspconfig')
 local lsp = require('lsp-zero')
 
 lsp.preset('recommended')
 lsp.setup()
 
-local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  -- Mappings.
-  local opts = { noremap=true, silent=true }
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-	buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-	buf_set_keymap('n', 'gc', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  --...
-	if client.resolved_capabilities.document_formatting then
-    vim.api.nvim_command [[augroup Format]]
-    vim.api.nvim_command [[autocmd! * <buffer>]]
-    vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
-    vim.api.nvim_command [[augroup END]]
-  end
+-- Only let null-ls format my files
+local null_ls_format = function(bufnr)
+  vim.lsp.buf.format({
+    bufnr = bufnr,
+    filter = function(client) return client.name == "null-ls" end,
+  })
 end
--- TypeScript
+
+
+local custom_attach = function(client, bufnr)
+  -- use omnifunc
+  vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+  vim.bo[bufnr].formatexpr = "v:lua.vim.lsp.formatexpr"
+
+  -- all formatting done by null-ls
+  local augroup = vim.api.nvim_create_augroup("LspFormatting", { clear = true })
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    group = augroup,
+    buffer = bufnr,
+    callback = function() null_ls_format(bufnr) end,
+  })
+end
+
+
 nvim_lsp.tsserver.setup {
-  on_attach = on_attach
+  on_attach = custom_attach
 }
 
-nvim_lsp.gopls.setup{}
-nvim_lsp.vuels.setup{}
+nvim_lsp.pyright.setup{}
 
-nvim_lsp.diagnosticls.setup {
-  on_attach = on_attach,
-  filetypes = { 'javascript', 'javascriptreact', 'json', 'typescript', 'typescriptreact', 'cs$', 'less', 'scss', 'markdown', 'pandoc','go', 'gopls', 'gomod', 'gotmpl','vuels','vue', 'volar' },
-  init_options = {
-    linters = {
-      eslint = {
-        command = 'eslint_d',
-        rootPatterns = { '.git' },
-        debounce = 100,
-        args = { '--stdin', '--stdin-filename', '%filepath', '--format', 'json' },
-        sourceName = 'eslint_d',
-        parseJson = {
-          errorsRoot = '[0].messages',
-          line = 'line',
-          column = 'column',
-          endLine = 'endLine',
-          endColumn = 'endColumn',
-          message = '[eslint] ${message} [${ruleId}]',
-          security = 'severity'
-        },
-        securities = {
-          [2] = 'error',
-          [1] = 'warning'
-        }
+
+
+nvim_lsp.vuels.setup({
+  on_attach = custom_attach,
+  settings = {
+    vetur = {
+      completion = {
+        autoImport = true,
+        tagCasing = "kebab",
+        useScaffoldSnippets = true,
+      },
+      useWorkspaceDependencies = true,
+      experimental = {
+        templateInterpolationService = true,
       },
     },
-    filetypes = {
-      javascript = 'eslint',
-      javascriptreact = 'eslint',
-      typescript = 'eslint',
-      typescriptreact = 'eslint',
-    },
-    formatters = {
-      eslint_d = {
-        command = 'eslint_d',
-        args = { '--stdin', '--stdin-filename', '%filename', '--fix-to-stdout' },
-        rootPatterns = { '.git' },
+    format = {
+      enable = true,
+      options = {
+        useTabs = false,
+        tabSize = 2,
       },
-      prettier = {
-        command = 'prettier',
-        args = { '--stdin-filepath', '%filename' }
-      }
+      defaultFormatter = {
+        ts = "prettier",
+      },
+      scriptInitialIndent = false,
+      styleInitialIndent = false,
     },
-    formatFiletypes = {
-      css = 'prettier',
-      javascript = 'eslint_d',
-      javascriptreact = 'eslint_d',
-      json = 'prettier',
-      scss = 'prettier',
-      less = 'prettier',
-      typescript = 'eslint_d',
-      typescriptreact = 'eslint_d',
-      json = 'prettier',
-      markdown = 'prettier',
-    }
-  }
-}
+    validation = {
+      template = true,
+      script = true,
+      style = true,
+      templateProps = true,
+      interpolation = true,
+    },
+  },
+})
+
+
+local null_ls = require("null-ls")
+null_ls.setup({
+  on_attach = custom_attach,
+  sources = {
+    --#formatters
+    null_ls.builtins.formatting.stylua,
+    null_ls.builtins.formatting.prettierd,
+    null_ls.builtins.formatting.eslint_d,
+
+    --#diagnostics/linters
+    -- DOESNT WORK?? LITNS TS AS JS
+    -- null_ls.builtins.diagnostics.eslint_d,
+    null_ls.builtins.diagnostics.flake8,
+
+    --#code actions
+    null_ls.builtins.code_actions.eslint_d,
+  },
+})
+
+
+
+-- nvim_lsp.diagnosticls.setup {
+--   on_attach = on_attach,
+--   filetypes = { 'javascript', 'json', 'typescript', 'cs$', 'less', 'scss', 'markdown', 'vuels', 'html' },
+--   init_options = {
+--     linters = {
+--       eslint = {
+--         command = 'eslint_d',
+--         rootPatterns = { '.git' },
+--         debounce = 100,
+--         args = { '--stdin', '--stdin-filename', '%filepath', '--format', 'json' },
+--         sourceName = 'eslint_d',
+--         parseJson = {
+--           errorsRoot = '[0].messages',
+--           line = 'line',
+--           column = 'column',
+--           endLine = 'endLine',
+--           endColumn = 'endColumn',
+--           message = '[eslint] ${message} [${ruleId}]',
+--           security = 'severity'
+--         },
+--         securities = {
+--           [2] = 'error',
+--           [1] = 'warning'
+--         }
+--       },
+--     },
+--     filetypes = {
+--       javascript = 'eslint',
+--       javascriptreact = 'eslint',
+--       typescript = 'eslint',
+--       typescriptreact = 'eslint',
+--     },
+--     formatters = {
+--       prettier = {
+--         command = 'prettier',
+--         args = { '--stdin-filepath', '%filename' }
+--       }
+--     },
+--     formatFiletypes = {
+--       css = 'prettier',
+--       javascript = 'eslint_d',
+--       javascriptreact = 'eslint_d',
+--       json = 'prettier',
+--       scss = 'prettier',
+--       less = 'prettier',
+--       typescript = 'eslint_d',
+--       typescriptreact = 'eslint_d',
+--       json = 'prettier',
+--       markdown = 'prettier',
+--     }
+--   }
+-- }
 
 -- icon
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     underline = true,
-    -- This sets the spacing and the prefix, obviously.
   }
 )
