@@ -11,6 +11,32 @@ return {
 			"simrat39/rust-tools.nvim",
 		},
 		config = function()
+			-- Specify how the border looks like
+			local border = {
+				{ "┌", "FloatBorder" },
+				{ "─", "FloatBorder" },
+				{ "┐", "FloatBorder" },
+				{ "│", "FloatBorder" },
+				{ "┘", "FloatBorder" },
+				{ "─", "FloatBorder" },
+				{ "└", "FloatBorder" },
+				{ "│", "FloatBorder" },
+			}
+
+			-- Add the border on hover and on signature help popup window
+			local handlers = {
+				["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
+				["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
+			}
+
+			-- Add border to the diagnostic popup window
+			vim.diagnostic.config({
+				virtual_text = {
+					prefix = "■ ", -- Could be '●', '▎', 'x', '■', , 
+				},
+				float = { border = border },
+			})
+
 			local lspconfig = require("lspconfig")
 			local cmp_nvim_lsp = require("cmp_nvim_lsp")
 			-- local pretty_hover = require("pretty_hover")
@@ -83,6 +109,7 @@ return {
 			lspconfig["tsserver"].setup({
 				capabilities = capabilities,
 				on_attach = on_attach,
+				handlers = handlers,
 				settings = {
 					init_options = {
 						plugins = {
@@ -107,6 +134,7 @@ return {
 			lspconfig["volar"].setup({
 				capabilities = capabilities,
 				on_attach = on_attach,
+				handlers = handlers,
 				filetypes = { "vue" },
 				init_options = {
 					vue = {
@@ -123,30 +151,46 @@ return {
 			lspconfig["cssls"].setup({
 				capabilities = capabilities,
 				on_attach = on_attach,
+				handlers = handlers,
 				filetypes = { "html", "css", "sass", "scss" },
 			})
 			lspconfig["emmet_ls"].setup({
 				capabilities = capabilities,
 				on_attach = on_attach,
+				handlers = handlers,
 				filetypes = { "html", "css", "sass", "scss" },
 			})
 
 			lspconfig["pyright"].setup({
 				capabilities = capabilities,
 				on_attach = on_attach,
+				handlers = handlers,
 			})
 			lspconfig["gopls"].setup({
 				capabilities = capabilities,
 				on_attach = on_attach,
+				handlers = handlers,
+				settings = {
+					gopls = {
+						usePlaceholders = true,
+						completeUnimported = true,
+						analyses = {
+							unusedparams = true,
+						},
+						staticcheck = true,
+					},
+				},
 			})
 			lspconfig["marksman"].setup({
 				capabilities = capabilities,
 				on_attach = on_attach,
+				handlers = handlers,
 			})
 
 			lspconfig["lua_ls"].setup({
 				capabilities = capabilities,
 				on_attach = on_attach,
+				handlers = handlers,
 				settings = { -- custom settings for lua
 					Lua = {
 						-- make the language server recognize "vim" global
