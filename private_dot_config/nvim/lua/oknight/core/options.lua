@@ -1,4 +1,4 @@
-vim.o.ignorecase = truemapp
+vim.o.ignorecase = true
 vim.o.encoding = "UTF-8"
 vim.o.incsearch = true
 vim.o.smartcase = true
@@ -21,7 +21,7 @@ vim.o.signcolumn = "yes"
 vim.o.splitright = true
 vim.o.splitbelow = true
 vim.o.autoindent = true
-vim.o.smartindent = true
+vim.o.smartindent = false
 vim.o.timeoutlen = 1000
 vim.o.ttimeoutlen = 5
 vim.o.autoread = true
