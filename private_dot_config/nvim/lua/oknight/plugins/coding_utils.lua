@@ -1,19 +1,19 @@
 -- General utils for coding e.g auto pairs, comments, surround etc
 return {
-	{
-		"echasnovski/mini.pairs",
-		event = "VeryLazy",
-		opts = {},
-		keys = {
-			{
-				"<leader>up",
-				function()
-					vim.g.minipairs_disable = not vim.g.minipairs_disable
-				end,
-				desc = "Toggle auto pairs",
-			},
-		},
-	},
+	-- {
+	-- 	"echasnovski/mini.pairs",
+	-- 	event = "VeryLazy",
+	-- 	opts = {},
+	-- 	keys = {
+	-- 		{
+	-- 			"<leader>up",
+	-- 			function()
+	-- 				vim.g.minipairs_disable = not vim.g.minipairs_disable
+	-- 			end,
+	-- 			desc = "Toggle auto pairs",
+	-- 		},
+	-- 	},
+	-- },
 	{
 		"echasnovski/mini.surround",
 		keys = function(_, keys)
