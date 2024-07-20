@@ -81,7 +81,7 @@ return {
 				keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
 				opts.desc = "Restart LSP"
-				keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
+				keymap.set("n", "<leader>rss", ":LspRestart<CR>", opts)
 			end
 
 			local capabilities = cmp_nvim_lsp.default_capabilities()
@@ -176,6 +176,11 @@ return {
 						completeUnimported = true,
 						analyses = {
 							unusedparams = true,
+						},
+						["ui.inlayhint.hints"] = {
+							compositeLiteralFields = true,
+							constantValues = true,
+							parameterNames = true,
 						},
 						staticcheck = true,
 					},

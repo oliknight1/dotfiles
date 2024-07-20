@@ -28,6 +28,7 @@ return {
 				graphql = { "prettier" },
 				lua = { "stylua" },
 				python = { "ruff", "isort", "black" },
+				go = { "staticcheck", "goimports" },
 			},
 			format_on_save = {
 				lsp_fallback = true,

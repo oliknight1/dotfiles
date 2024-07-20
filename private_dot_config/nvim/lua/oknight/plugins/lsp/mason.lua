@@ -49,6 +49,8 @@ return {
 				"black",
 				"ruff", -- python linter
 				"eslint",
+				"staticcheck", -- go linter
+				"goimports",
 			},
 		})
 	end,

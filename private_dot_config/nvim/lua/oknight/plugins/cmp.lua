@@ -55,9 +55,9 @@ return {
 				{ name = "buffer" },
 			}),
 			experimental = {
-				ghost_text = {
-					hl_group = "CmpGhostText",
-				},
+				-- host_text = {
+				-- 	hl_group = "CmpGhostText",
+				-- },
 			},
 			sorting = defaults.sorting,
 		}

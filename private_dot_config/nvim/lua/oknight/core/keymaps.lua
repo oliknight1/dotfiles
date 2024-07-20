@@ -48,14 +48,3 @@ opts.desc = "Disable inline virtual text"
 keymap.set("n", "<leader>dv", ":lua vim.diagnostic.config{virtual_text=false}<CR>", opts)
 
 keymap.set("v", "<C-c>", '"*y', { noremap = true, silent = true })
-
---TODO:
--- add harpoon
--- -- Harpoon
--- keymap('n', '<leader>ha', ':lua require("harpoon.mark").add_file()<CR>', { silent = false })
--- keymap('n', '<leader>ho', ':lua require("harpoon.ui").toggle_quick_menu()<CR>', { silent = false })
---
--- keymap('n', '<leader>h1', ':lua require("harpoon.ui").nav_file(1)<CR>', { silent = false })
--- keymap('n', '<leader>h2', ':lua require("harpoon.ui").nav_file(2)<CR>', { silent = false })
--- keymap('n', '<leader>h3', ':lua require("harpoon.ui").nav_file(3)<CR>', { silent = false })
--- keymap('n', '<leader>h4', ':lua require("harpoon.ui").nav_file(4)<CR>', { silent = false })
