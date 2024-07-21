@@ -1,4 +1,9 @@
 return {
+	{
+		"Fildo7525/pretty_hover",
+		event = "LspAttach",
+		opts = {},
+	},
 
 	{
 		"neovim/nvim-lspconfig",
