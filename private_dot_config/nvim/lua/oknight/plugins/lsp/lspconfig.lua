@@ -39,49 +39,10 @@ return {
 
 			local lspconfig = require("lspconfig")
 			local cmp_nvim_lsp = require("cmp_nvim_lsp")
-			-- local pretty_hover = require("pretty_hover")
-			-- pretty_hover.setup()
-
-			local opts = { noremap = true, silent = true }
-
-			local keymap = vim.keymap
 			local on_attach = function(client, bufnr)
-				opts.bufnr = bufnr
-
-				-- keybinds
-				opts.desc = "Show LSP references"
-				keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
-
-				opts.desc = "Go to declaration"
-				keymap.set("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-
-				opts.desc = "Show LSP definitions"
-				keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
-
-				opts.desc = "Show LSP implementations"
-				keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
-
-				opts.desc = "Show LSP type definitions"
-				keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
-
-				opts.desc = "Show documentation for what is under cursor"
-				keymap.set("n", "K", '<cmd>lua require("pretty_hover").hover()<CR>', opts)
-				-- keymap.set("n", "K", vim.lsp.buf.hover, opts)
-
-				opts.desc = "See available code actions"
-				keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-
-				opts.desc = "Smart rename"
-				keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-
-				opts.desc = "Go to previous diagnostic"
-				keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-
-				opts.desc = "Go to next diagnostic"
-				keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-
-				opts.desc = "Restart LSP"
-				keymap.set("n", "<leader>rss", ":LspRestart<CR>", opts)
+				if client.server_capabilities.inlayHintProvider then
+					vim.lsp.inlay_hint.enable(bufnr, true)
+				end
 			end
 
 			local capabilities = cmp_nvim_lsp.default_capabilities()
@@ -112,12 +73,46 @@ return {
 				handlers = handlers,
 				settings = {
 					init_options = {
+						preferences = {
+							includeInlayParameterNameHints = "all",
+							includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+							includeInlayFunctionParameterTypeHints = true,
+							includeInlayVariableTypeHints = true,
+							includeInlayPropertyDeclarationTypeHints = true,
+							includeInlayFunctionLikeReturnTypeHints = true,
+							includeInlayEnumMemberValueHints = true,
+							importModuleSpecifierPreference = "non-relative",
+						},
+
 						plugins = {
 							{
 								name = "@vue/typescript-plugin",
 								location = vue_language_server_path,
 								languages = { "typescript", "vue" },
 							},
+						},
+					},
+					javascript = {
+						inlayHints = {
+							includeInlayEnumMemberValueHints = true,
+							includeInlayFunctionLikeReturnTypeHints = true,
+							includeInlayFunctionParameterTypeHints = true,
+							includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+							includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+							includeInlayPropertyDeclarationTypeHints = true,
+							includeInlayVariableTypeHints = false,
+						},
+					},
+
+					typescript = {
+						inlayHints = {
+							includeInlayEnumMemberValueHints = true,
+							includeInlayFunctionLikeReturnTypeHints = true,
+							includeInlayFunctionParameterTypeHints = true,
+							includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+							includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+							includeInlayPropertyDeclarationTypeHints = true,
+							includeInlayVariableTypeHints = false,
 						},
 					},
 					tsserver = {
@@ -198,6 +193,7 @@ return {
 				handlers = handlers,
 				settings = { -- custom settings for lua
 					Lua = {
+						hint = { enable = true },
 						-- make the language server recognize "vim" global
 						diagnostics = {
 							globals = { "vim" },
