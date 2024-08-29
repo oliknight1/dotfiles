@@ -1,5 +1,10 @@
 -- General utils for coding e.g auto pairs, comments, surround etc
 return {
+	{
+		"echasnovski/mini.icons",
+		version = false,
+		opts = {},
+	},
 	-- {
 	-- 	"echasnovski/mini.pairs",
 	-- 	event = "VeryLazy",
