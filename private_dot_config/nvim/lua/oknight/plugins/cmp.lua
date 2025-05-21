@@ -1,71 +1,70 @@
 return {
-	"hrsh7th/nvim-cmp",
-	version = false, -- last release is way too old
-	event = "InsertEnter",
-	dependencies = {
-		"hrsh7th/cmp-nvim-lsp",
-		"hrsh7th/cmp-buffer",
-		"hrsh7th/cmp-path",
-		"saadparwaiz1/cmp_luasnip",
-	},
-	opts = function()
-		vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
-		local cmp = require("cmp")
-		local defaults = require("cmp.config.default")()
-		return {
-			window = {
-				completion = cmp.config.window.bordered(),
-				documentation = cmp.config.window.bordered(),
+	{
+		"saghen/blink.cmp",
+		dependencies = {
+			"rafamadriz/friendly-snippets",
+			{ "echasnovski/mini.icons", version = false },
+		},
+
+		version = "1.*",
+		---@module 'blink.cmp'
+		---@type blink.cmp.Config
+		opts = {
+			keymap = { preset = "super-tab" },
+
+			appearance = {
+				nerd_font_variant = "mono",
 			},
+
 			completion = {
-				completeopt = "menu,menuone,noinsert",
+				menu = {
+
+					border = "rounded",
+					winhighlight = "Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:PmenuSel,Search:None",
+
+					draw = {
+						components = {
+							kind_icon = {
+								text = function(ctx)
+									local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
+									return kind_icon
+								end,
+								-- (optional) use highlights from mini.icons
+								highlight = function(ctx)
+									local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
+									return hl
+								end,
+							},
+							kind = {
+								-- (optional) use highlights from mini.icons
+								highlight = function(ctx)
+									local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
+									return hl
+								end,
+							},
+						},
+					},
+				},
+				documentation = {
+					auto_show = true,
+					auto_show_delay_ms = 500,
+					window = { border = "single" },
+				},
+				accept = { auto_brackets = { enabled = false } },
+				-- Display a preview of the selected item on the current line
+				ghost_text = { enabled = true },
 			},
-			snippet = {
-				expand = function(args)
-					require("luasnip").lsp_expand(args.body)
-				end,
+			cmdline = {
+				keymap = { preset = "inherit" },
+				completion = { menu = { auto_show = true } },
 			},
-			mapping = cmp.mapping.preset.insert({
-				["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-				["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-				["<C-b>"] = cmp.mapping.scroll_docs(-4),
-				["<C-f>"] = cmp.mapping.scroll_docs(4),
-				["<C-Space>"] = cmp.mapping.complete(),
-				["<C-e>"] = cmp.mapping.abort(),
-				["<Tab>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-				["<C-Tab>"] = cmp.mapping.confirm({
-					behavior = cmp.ConfirmBehavior.Replace,
-					select = true,
-				}), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-				-- ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-				-- ["<S-CR>"] = cmp.mapping.confirm({
-				-- 	behavior = cmp.ConfirmBehavior.Replace,
-				-- 	select = true,
-				-- }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-				["<C-CR>"] = function(fallback)
-					cmp.abort()
-					fallback()
-				end,
-			}),
-			sources = cmp.config.sources({
-				{ name = "nvim_lsp" },
-				{ name = "luasnip" },
-				{ name = "path" },
-			}, {
-				{ name = "buffer" },
-			}),
-			experimental = {
-				-- host_text = {
-				-- 	hl_group = "CmpGhostText",
-				-- },
+
+			sources = {
+				default = { "lsp", "path", "snippets", "buffer" },
 			},
-			sorting = defaults.sorting,
-		}
-	end,
-	config = function(_, opts)
-		for _, source in ipairs(opts.sources) do
-			source.group_index = source.group_index or 1
-		end
-		require("cmp").setup(opts)
-	end,
+
+			fuzzy = { implementation = "prefer_rust_with_warning" },
+		},
+		opts_extend = { "sources.default" },
+	},
 }

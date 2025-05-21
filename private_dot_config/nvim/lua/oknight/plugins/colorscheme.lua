@@ -20,7 +20,7 @@ return {
 			})
 		end,
 		config = function()
-			vim.cmd.colorscheme("catppuccin")
+			-- vim.cmd.colorscheme("catppuccin")
 		end,
 	},
 	{
@@ -45,6 +45,56 @@ return {
 				transparent_background = true,
 			})
 			-- vim.cmd.colorscheme("eldritch")
+		end,
+	},
+	{
+		"rebelot/kanagawa.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("kanagawa").setup({})
+			-- vim.cmd.colorscheme("eldritch")
+		end,
+	},
+	{
+		"rose-pine/neovim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("rose-pine").setup({})
+			-- vim.cmd.colorscheme("eldritch")
+		end,
+	},
+	-- {
+	-- 	"AlexvZyl/nordic.nvim",
+	-- 	lazy = false,
+	-- 	priority = 1000,
+	-- 	config = function()
+	-- 		require("nordic").load()
+	-- 	end,
+	-- },
+	{
+		"slugbyte/lackluster.nvim",
+		lazy = false,
+		priority = 1000,
+		init = function()
+			-- vim.cmd.colorscheme("lackluster")
+			-- vim.cmd.colorscheme("lackluster-hack") -- my favorite
+			-- vim.cmd.colorscheme("lackluster-mint")
+		end,
+	},
+	{
+		"jesseleite/nvim-noirbuddy",
+		dependencies = {
+			{ "tjdevries/colorbuddy.nvim" },
+		},
+		lazy = false,
+		priority = 1000,
+		opts = {
+			preset = "miami-nights",
+		},
+		config = function(_, opts)
+			require("noirbuddy").setup(opts)
 		end,
 	},
 }

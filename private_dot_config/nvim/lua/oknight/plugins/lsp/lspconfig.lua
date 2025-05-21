@@ -1,17 +1,11 @@
 return {
 	{
-		"Fildo7525/pretty_hover",
-		event = "LspAttach",
-		opts = {},
-	},
-
-	{
 		"neovim/nvim-lspconfig",
 		lazy = false,
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
-			"Fildo7525/pretty_hover",
+			-- "hrsh7th/cmp-nvim-lsp",
+			"saghen/blink.cmp",
 			{ "antosha417/nvim-lsp-file-operations", config = true },
 			"simrat39/rust-tools.nvim",
 		},
@@ -43,14 +37,15 @@ return {
 			})
 
 			local lspconfig = require("lspconfig")
-			local cmp_nvim_lsp = require("cmp_nvim_lsp")
+			-- local cmp_nvim_lsp = require("cmp_nvim_lsp")
 			local on_attach = function(client, bufnr)
 				if client.server_capabilities.inlayHintProvider then
 					vim.lsp.inlay_hint.enable(bufnr, true)
 				end
 			end
 
-			local capabilities = cmp_nvim_lsp.default_capabilities()
+			-- local capabilities = cmp_nvim_lsp.default_capabilities()
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 			local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
 			for type, icon in pairs(signs) do
@@ -178,9 +173,9 @@ return {
 							unusedparams = true,
 						},
 						["ui.inlayhint.hints"] = {
-							compositeLiteralFields = true,
-							constantValues = true,
-							parameterNames = true,
+							-- compositeLiteralFields = true,
+							-- constantValues = true,
+							-- parameterNames = true,
 						},
 						staticcheck = true,
 					},
