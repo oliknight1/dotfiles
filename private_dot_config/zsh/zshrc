@@ -10,8 +10,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(git zsh-syntax-highlighting zsh-z zsh-autosuggestions tmux pyenv)
 
 source $ZSH/oh-my-zsh.sh
-alias nvim="/Users/oknight/nvim-macos/bin/nvim"
+alias nvim="~/nvim-macos-x86_64/bin/nvim"
 alias standup='cd ~/Documents && git standup -m 3 -s && cd -'
+alias notes='cd /Users/oli/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/notes/'
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 ZSH_TMUX_AUTOSTART=true
@@ -20,6 +21,7 @@ source ~/.nvm/nvm.sh
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+export PATH=$PATH:$HOME/.local/opt/go/bin
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(pyenv init --path)"

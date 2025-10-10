@@ -1,6 +1,7 @@
 vim.o.ignorecase = true
 vim.o.encoding = "UTF-8"
 vim.o.incsearch = true
+
 vim.o.smartcase = true
 vim.o.linebreak = true
 vim.o.listchars = "eol:$"
@@ -27,16 +28,19 @@ vim.o.ttimeoutlen = 5
 vim.o.autoread = true
 
 vim.o.expandtab = true
-vim.o.tabstop = 4
+vim.o.tabstop = 2
 vim.o.softtabstop = 0
-vim.o.shiftwidth = 4
+vim.o.shiftwidth = 2
 vim.o.smarttab = true
 vim.o.laststatus = 2
-vim.o.foldcolumn = "0" -- '0' is not bad
-vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-vim.o.foldlevelstart = 99
 vim.o.foldenable = true
+vim.o.foldlevel = 99
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.o.foldtext = ""
+vim.opt.foldcolumn = "0"
+vim.opt.fillchars:append({ fold = " " })
+
 vim.g.mapleader = " "
 vim.o.mouse = "a"
 vim.o.syntax = "on"
@@ -50,16 +54,7 @@ vim.opt.guifont = "font-hack-nerd-font"
 
 vim.g.copilot_no_tab_map = true
 
+vim.opt.colorcolumn = "120"
+
 vim.cmd("autocmd BufEnter * set formatoptions-=cro")
 vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
-
--- Add outline to hover panel
-vim.diagnostic.config({
-	float = {
-		border = "rounded",
-	},
-})
-
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })

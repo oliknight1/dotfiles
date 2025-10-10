@@ -3,49 +3,75 @@ return {
 		"neovim/nvim-lspconfig",
 		lazy = false,
 		event = { "BufReadPre", "BufNewFile" },
-		dependencies = {
-			-- "hrsh7th/cmp-nvim-lsp",
-			"saghen/blink.cmp",
-			{ "antosha417/nvim-lsp-file-operations", config = true },
-			"simrat39/rust-tools.nvim",
+		--   vim.lsp.buf.hover { border = "single", max_height = 25 }
+		-- end)
+		keys = {
+			{
+				"K",
+				function()
+					vim.lsp.buf.signature_help({ border = "rounded", max_height = 25 })
+				end,
+				desc = "LSP signature help",
+			},
+			{
+				"gR",
+				"<cmd> Telescope lsp_references<CR>",
+				desc = "Show LSP references (Telescope)",
+			},
+			{
+				"gD",
+				"<Cmd>lua vim.lsp.buf.declaration()<CR>",
+				desc = "Go to declaration",
+			},
+			{
+				"gi",
+				"<Cmd>lua vim.lsp.buf.implementations()<CR>",
+				desc = "Go to implementations",
+			},
+			{
+				"gt",
+				"<Cmd>lua vim.lsp.buf.type_definitions()<CR>",
+				desc = "Go to type defintion",
+			},
+			{
+				"<leader>ca",
+				"<Cmd>lua vim.lsp.buf.code_action()<CR>",
+				desc = "Code action",
+			},
+			{
+				"<leader>rs",
+				"<Cmd>LSPRestart<CR>",
+				desc = "LSP Restart",
+			},
 		},
 		config = function()
-			-- Specify how the border looks like
-			local border = {
-				{ "┌", "FloatBorder" },
-				{ "─", "FloatBorder" },
-				{ "┐", "FloatBorder" },
-				{ "│", "FloatBorder" },
-				{ "┘", "FloatBorder" },
-				{ "─", "FloatBorder" },
-				{ "└", "FloatBorder" },
-				{ "│", "FloatBorder" },
-			}
-
-			-- Add the border on hover and on signature help popup window
-			local handlers = {
-				["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
-				["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
-			}
-
-			-- Add border to the diagnostic popup window
+			-- Add rounded outline to hover panel
 			vim.diagnostic.config({
-				virtual_text = {
-					prefix = "■ ", -- Could be '●', '▎', 'x', '■', , 
+				float = {
+					border = "rounded",
 				},
-				float = { border = border },
 			})
+			-- TODO: Maybe need this sort of thing
+			-- local border = {
+			-- 	{ "┌", "FloatBorder" },
+			-- 	{ "─", "FloatBorder" },
+			-- 	{ "┐", "FloatBorder" },
+			-- 	{ "│", "FloatBorder" },
+			-- 	{ "┘", "FloatBorder" },
+			-- 	{ "─", "FloatBorder" },
+			-- 	{ "└", "FloatBorder" },
+			-- 	{ "│", "FloatBorder" },
+			-- }
+			-- -- Add the border on hover and on signature help popup window
+			-- local handlers = {
+			-- 	["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
+			-- 	["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
+			-- }
+			vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+			vim.lsp.handlers["textDocument/signatureHelp"] =
+				vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
 			local lspconfig = require("lspconfig")
-			-- local cmp_nvim_lsp = require("cmp_nvim_lsp")
-			local on_attach = function(client, bufnr)
-				if client.server_capabilities.inlayHintProvider then
-					vim.lsp.inlay_hint.enable(bufnr, true)
-				end
-			end
-
-			-- local capabilities = cmp_nvim_lsp.default_capabilities()
-			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 			local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
 			for type, icon in pairs(signs) do
@@ -53,144 +79,27 @@ return {
 				vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 			end
 
-			lspconfig["html"].setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-			})
+			local on_attach = function(client, bufnr) end
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-			lspconfig["jsonls"].setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-			})
-
-			local mason_registry = require("mason-registry")
-			local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
-			local tsdk = require("mason-registry").get_package("typescript-language-server"):get_install_path()
-				.. "/node_modules/typescript/lib"
-			lspconfig["tsserver"].setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-				handlers = handlers,
-				settings = {
-					init_options = {
-						preferences = {
-							includeInlayParameterNameHints = "all",
-							includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-							includeInlayFunctionParameterTypeHints = true,
-							includeInlayVariableTypeHints = true,
-							includeInlayPropertyDeclarationTypeHints = true,
-							includeInlayFunctionLikeReturnTypeHints = true,
-							includeInlayEnumMemberValueHints = true,
-							importModuleSpecifierPreference = "non-relative",
-						},
-
-						plugins = {
-							{
-								name = "@vue/typescript-plugin",
-								location = vue_language_server_path,
-								languages = { "typescript", "vue" },
-							},
-						},
-					},
-					javascript = {
-						inlayHints = {
-							includeInlayEnumMemberValueHints = true,
-							includeInlayFunctionLikeReturnTypeHints = true,
-							includeInlayFunctionParameterTypeHints = true,
-							includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
-							includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-							includeInlayPropertyDeclarationTypeHints = true,
-							includeInlayVariableTypeHints = false,
-						},
-					},
-
-					typescript = {
-						inlayHints = {
-							includeInlayEnumMemberValueHints = true,
-							includeInlayFunctionLikeReturnTypeHints = true,
-							includeInlayFunctionParameterTypeHints = true,
-							includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
-							includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-							includeInlayPropertyDeclarationTypeHints = true,
-							includeInlayVariableTypeHints = false,
-						},
-					},
-					tsserver = {
-						-- This overwrite the path from the local project, in case your project ts version is not compatible with the plugin
-						path = tsdk,
-					},
-					filetypes = { "javascript", "typescript", "vue" },
-					completions = {
-						completeFunctionCalls = true,
-					},
-				},
-			})
-
-			lspconfig["volar"].setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-				handlers = handlers,
-				filetypes = { "vue" },
-				init_options = {
-					vue = {
-						hybridMode = false,
-					},
-				},
-			})
-			-- lspconfig["vuels"].setup({
-			-- 	capabilities = capabilities,
-			-- 	on_attach = on_attach,
-			-- 	filetypes = { "vue", "javascript", "typescript" },
-			-- })
-
-			lspconfig["cssls"].setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-				handlers = handlers,
-				filetypes = { "html", "css", "sass", "scss" },
-			})
-			lspconfig["emmet_ls"].setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-				handlers = handlers,
-				filetypes = { "html", "css", "sass", "scss" },
-			})
-
-			lspconfig["pyright"].setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-				handlers = handlers,
-			})
 			lspconfig["gopls"].setup({
+				lsp_cfg = false,
 				capabilities = capabilities,
 				on_attach = on_attach,
-				handlers = handlers,
 				settings = {
 					gopls = {
-						usePlaceholders = true,
 						completeUnimported = true,
 						analyses = {
 							unusedparams = true,
-						},
-						["ui.inlayhint.hints"] = {
-							-- compositeLiteralFields = true,
-							-- constantValues = true,
-							-- parameterNames = true,
 						},
 						staticcheck = true,
 					},
 				},
 			})
-			lspconfig["marksman"].setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-				handlers = handlers,
-			})
-
 			lspconfig["lua_ls"].setup({
 				capabilities = capabilities,
 				on_attach = on_attach,
-				handlers = handlers,
+				-- handlers = handlers,
 				settings = { -- custom settings for lua
 					Lua = {
 						hint = { enable = true },
@@ -207,8 +116,8 @@ return {
 						},
 					},
 				},
+				s,
 			})
-			require("ufo").setup()
 		end,
 	},
 }
