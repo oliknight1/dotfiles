@@ -10,7 +10,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(git zsh-syntax-highlighting zsh-z zsh-autosuggestions tmux pyenv)
 
 source $ZSH/oh-my-zsh.sh
-alias nvim="~/nvim-macos-x86_64/bin/nvim"
+alias nvim="/Users/oli/nvim-macos-arm64/bin/nvim"
 alias standup='cd ~/Documents && git standup -m 3 -s && cd -'
 alias notes='cd /Users/oli/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/notes/'
 

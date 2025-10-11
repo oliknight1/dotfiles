@@ -25,7 +25,7 @@ require("lazy").setup({
 		{ import = "oknight.plugins.lsp" },
 		{ import = "oknight.plugins.mini" },
 	},
-	install = { colorscheme = { "noirbuddy" } },
+	install = { colorscheme = { "nightfly" } },
 
 	-- automatically check for plugin updates
 	checker = { enabled = true, notify = true },

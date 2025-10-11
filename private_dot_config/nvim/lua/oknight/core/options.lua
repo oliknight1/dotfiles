@@ -52,9 +52,37 @@ vim.opt.cursorlineopt = "number"
 
 vim.opt.guifont = "font-hack-nerd-font"
 
-vim.g.copilot_no_tab_map = true
-
 vim.opt.colorcolumn = "120"
 
 vim.cmd("autocmd BufEnter * set formatoptions-=cro")
 vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
+
+local signs = {
+	[vim.diagnostic.severity.ERROR] = "",
+	[vim.diagnostic.severity.WARN] = "",
+	[vim.diagnostic.severity.INFO] = "",
+	[vim.diagnostic.severity.HINT] = "󰠠",
+}
+
+vim.diagnostic.config({
+	signs = {
+		active = true,
+		text = signs,
+		texthl = {
+			[vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+			[vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+			[vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+			[vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+		},
+		numhl = {
+			[vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+			[vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+			[vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+			[vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+		},
+	},
+	virtual_text = true,
+	underline = true,
+	update_in_insert = true,
+	float = { border = "rounded" },
+})

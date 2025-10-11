@@ -5,15 +5,12 @@ return {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
 	config = function()
-		-- import mason
 		local mason = require("mason")
-
-		-- import mason-lspconfig
 		local mason_lspconfig = require("mason-lspconfig")
-
 		local mason_tool_installer = require("mason-tool-installer")
+		local lspconfig = require("lspconfig")
 
-		-- enable mason and configure icons
+		-- Mason UI
 		mason.setup({
 			ui = {
 				icons = {
@@ -24,34 +21,71 @@ return {
 			},
 		})
 
+		-- Mason LSP
 		mason_lspconfig.setup({
-			-- list of servers for mason to install
 			ensure_installed = {
+				"gopls",
+				"lua_ls",
 				"ts_ls",
 				"html",
 				"cssls",
-				"lua_ls",
 				"graphql",
 				"emmet_ls",
-				"gopls",
 				"pyright",
 				"marksman",
 			},
-			-- auto-install configured servers (with lspconfig)
-			automatic_installation = true, -- not the same as ensure_installed
+			automatic_installation = true,
 		})
 
+		-- Mason Tool Installer
 		mason_tool_installer.setup({
 			ensure_installed = {
 				"prettier",
 				"stylua",
 				"isort",
 				"black",
-				"ruff", -- python linter
+				"ruff",
 				"eslint",
-				"staticcheck", -- go linter
+				"staticcheck",
 				"goimports",
 			},
 		})
+
+		-- LSP defaults
+		local on_attach = function(client, bufnr) end
+		local capabilities = require("blink.cmp").get_lsp_capabilities()
+
+		-- Manually setup servers (instead of setup_handlers)
+		local servers = {
+			lua_ls = {
+				settings = {
+					Lua = {
+						hint = { enable = true },
+						diagnostics = { globals = { "vim" } },
+						workspace = {
+							library = {
+								[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+								[vim.fn.stdpath("config") .. "/lua"] = true,
+							},
+						},
+					},
+				},
+			},
+			gopls = {
+				settings = {
+					gopls = {
+						completeUnimported = true,
+						analyses = { unusedparams = true },
+						staticcheck = true,
+					},
+				},
+			},
+		}
+
+		for name, config in pairs(servers) do
+			config.capabilities = capabilities
+			config.on_attach = on_attach
+			lspconfig[name].setup(config)
+		end
 	end,
 }
