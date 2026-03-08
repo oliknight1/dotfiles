@@ -12,7 +12,7 @@ return {
 	opts = function()
 		return {
 			ensure_installed = { "vim", "lua", "go" },
-			-- highlight = { enable = true },
+			highlight = { enable = false },
 			textobjects = {
 				select = {
 					enable = true,

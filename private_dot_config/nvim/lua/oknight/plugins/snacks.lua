@@ -82,25 +82,19 @@ return {
 		quickfile = { enabled = true },
 		scope = { enabled = true },
 		statuscolumn = { enabled = true },
-		words = { enabled = true },
+		words = { enabled = false },
 		gitbrowse = { enabled = true },
 
 		scroll = { enabled = false },
+		dim = { enabled = true },
 	},
 	keys = {
 		{
-			"<leader>f",
+			"<leader>S",
 			function()
-				Snacks.picker.files()
+				Snacks.picker()
 			end,
-			desc = "Find Files",
-		},
-		{
-			"<leader>/",
-			function()
-				Snacks.picker.grep()
-			end,
-			desc = "Grep",
+			desc = "Open Picker",
 		},
 		-- NOTE: this find files but also includes recent files
 		{
@@ -226,13 +220,20 @@ return {
 			end,
 			desc = "LSP Workspace Symbols",
 		},
-
 		{
 			"<leader>gB",
 			function()
 				Snacks.gitbrowse()
 			end,
 			desc = "Git Browse",
+			mode = { "n", "v" },
+		},
+		{
+			"<leader>sd",
+			function()
+				Snacks.dim()
+			end,
+			desc = "Snacks dim",
 			mode = { "n", "v" },
 		},
 	},
