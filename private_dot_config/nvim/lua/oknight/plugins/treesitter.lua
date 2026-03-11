@@ -11,7 +11,7 @@ return {
 	cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
 	opts = function()
 		return {
-			ensure_installed = { "vim", "lua", "go" },
+			ensure_installed = { "vim", "lua", "go", "typescript", "javascript" },
 			highlight = { enable = false },
 			textobjects = {
 				select = {

@@ -57,7 +57,6 @@ return {
 						},
 					},
 				},
-				tsserver = {}, -- TypeScript / JavaScript LSP
 				jsonls = {
 					root_dir = util.root_pattern(".git", "package.json", "tsconfig.json"),
 					settings = {

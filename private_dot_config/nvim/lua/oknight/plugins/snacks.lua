@@ -134,13 +134,6 @@ return {
 			desc = "Git Log Line",
 		},
 		{
-			"<leader>gs",
-			function()
-				Snacks.picker.git_status()
-			end,
-			desc = "Git Status",
-		},
-		{
 			"<leader>gS",
 			function()
 				Snacks.picker.git_stash()
@@ -161,15 +154,6 @@ return {
 			end,
 			desc = "Git Log File",
 		},
-		{
-			"<leader>/",
-			function()
-				Snacks.picker.grep()
-			end,
-			desc = "Grep",
-		},
-		-- TODO: try out these LSP things
-		-- LSP
 		{
 			"gd",
 			function()

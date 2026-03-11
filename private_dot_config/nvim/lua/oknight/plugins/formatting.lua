@@ -21,6 +21,8 @@ return {
 				yaml = { "prettier" },
 				markdown = { "prettier" },
 				lua = { "stylua" },
+				javascript = { "prettier" },
+				typescript = { "prettier" },
 				go = { "staticcheck", "goimports" },
 			},
 			format_on_save = {

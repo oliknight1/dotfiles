@@ -24,6 +24,8 @@ return {
 				"gopls",
 				"lua_ls",
 				"rust_analyzer",
+				"prettier",
+				"eslint_d",
 			},
 			automatic_installation = false,
 		})
