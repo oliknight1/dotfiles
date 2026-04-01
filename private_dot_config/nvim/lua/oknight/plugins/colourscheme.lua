@@ -38,14 +38,14 @@ return {
 		priority = 1000,
 		opts = {},
 		config = function()
-			-- vim.cmd.colorscheme("farout")
+			vim.cmd.colorscheme("farout")
 		end,
 	},
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
 		config = function()
-			vim.cmd("colorscheme rose-pine")
+			-- vim.cmd("colorscheme rose-pine")
 		end,
 	},
 }

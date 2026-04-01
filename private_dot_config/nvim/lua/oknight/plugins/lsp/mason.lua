@@ -35,6 +35,7 @@ return {
 				"stylua",
 				"staticcheck",
 				"goimports",
+				"js-debug-adapter",
 			},
 			auto_update = true,
 		})
