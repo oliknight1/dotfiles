@@ -13,21 +13,21 @@ return {
 	lazy = false,
 	keys = {
 		{
-			"<leader>ff", -- try it if you didn't it is a banger keybinding for a picker
+			"<leader>f", -- try it if you didn't it is a banger keybinding for a picker
 			function()
 				require("fff").find_files()
 			end,
 			desc = "Find files",
 		},
 		{
-			"<leader>f/",
+			"<leader>/",
 			function()
 				require("fff").live_grep()
 			end,
 			desc = "Live grep",
 		},
 		{
-			"<leader>fc",
+			"<leader>cw",
 			function()
 				require("fff").live_grep({ query = vim.fn.expand("<cword>") })
 			end,
