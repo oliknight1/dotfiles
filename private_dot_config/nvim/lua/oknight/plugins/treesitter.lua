@@ -11,7 +11,7 @@ return {
 	cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
 	opts = function()
 		return {
-			ensure_installed = { "vim", "lua", "go", "typescript", "javascript" },
+			ensure_installed = { "vim", "lua", "go", "typescript", "javascript", "bash" },
 			highlight = { enable = false },
 			textobjects = {
 				select = {
@@ -65,6 +65,6 @@ return {
 		}
 	end,
 	config = function(_, opts)
-		require("nvim-treesitter.configs").setup(opts)
+		require("nvim-treesitter").setup(opts)
 	end,
 }

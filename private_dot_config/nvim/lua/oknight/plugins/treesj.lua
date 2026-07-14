@@ -3,9 +3,20 @@ return {
 	"Wansmer/treesj",
 	dependencies = { "nvim-treesitter/nvim-treesitter" }, -- if you install parsers with `nvim-treesitter`
 	keys = {
-		{ "<leader>tjm", "<cmd>TSJToggle<cr>", desc = "Toggle Split/Join Block" },
-		{ "<leader>tjj", "<cmd>TSJJoin<cr>", desc = "Join Block" },
-		{ "<leader>tjs", "<cmd>TSJSplit<cr>", desc = "Split Block" },
+		{
+			"<leader>m",
+			function()
+				require("treesj").toggle()
+			end,
+			desc = " TreeSJ Toggle Split/Join Block",
+		},
+		{
+			"<leader>M",
+			function()
+				require("treesj").toggle({ split = { recursive = true } })
+			end,
+			desc = "Recursive Split Block",
+		},
 	},
 	opts = {
 		use_default_keymaps = false,

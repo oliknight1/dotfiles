@@ -23,7 +23,6 @@ return {
 				lua = { "stylua" },
 				javascript = { "prettier" },
 				typescript = { "prettier" },
-				go = { "staticcheck", "goimports" },
 			},
 			format_on_save = {
 				lsp_fallback = true,

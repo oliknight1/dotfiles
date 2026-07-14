@@ -53,6 +53,8 @@ return {
 	config = function()
 		local dap = require("dap")
 		local ui = require("dapui")
+
+		-- UI setup
 		ui.setup()
 		dap.listeners.after.event_initialized["dapui_config"] = function()
 			ui.open()
@@ -63,38 +65,34 @@ return {
 		dap.listeners.before.event_exited["dapui_config"] = function()
 			ui.close()
 		end
+
 		require("nvim-dap-virtual-text").setup()
 
+		-- JS debug adapter
 		local mason_path = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter"
 		local js_debug_path = mason_path .. "/js-debug/src/dapDebugServer.js"
-
 		dap.adapters["pwa-node"] = {
 			type = "server",
 			host = "localhost",
 			port = "${port}",
-			executable = {
-				command = "node",
-				args = { js_debug_path, "${port}" },
-			},
+			executable = { command = "node", args = { js_debug_path, "${port}" } },
 		}
+
+		-- Only the attach configuration for external terminal
+		local attach_config = {
+			type = "pwa-node",
+			request = "attach",
+			name = "Attach to Node CLI",
+			host = "localhost",
+			port = 9229, -- must match your --inspect-brk port
+			cwd = vim.fn.getcwd(),
+			sourceMaps = true,
+			outFiles = { "${workspaceFolder}/**/*.ts" },
+			skipFiles = { "<node_internals>/**" },
+		}
+
 		for _, lang in ipairs({ "typescript", "javascript" }) do
-			dap.configurations[lang] = {
-				{
-					type = "pwa-node",
-					request = "launch",
-					name = "Launch file",
-					program = "${file}",
-					cwd = vim.fn.getcwd(),
-					sourceMaps = true,
-				},
-				{
-					type = "pwa-node",
-					request = "attach",
-					name = "Attach to process",
-					processId = require("dap.utils").pick_process,
-					cwd = vim.fn.getcwd(),
-				},
-			}
+			dap.configurations[lang] = { attach_config }
 		end
 	end,
 }

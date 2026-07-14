@@ -1,0 +1,7 @@
+{
+  "Console Log Separator": {
+    "prefix": "<leader>cl",
+    "body": ["console.log(\"------------------------\");"],
+    "description": "Insert a console.log line separator"
+  }
+}

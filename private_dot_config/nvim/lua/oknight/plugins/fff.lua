@@ -3,17 +3,20 @@ return {
 	build = function()
 		require("fff.download").download_or_build_binary()
 	end,
-	opts = { -- (optional)
+	opts = {
+		status_text_color = true,
 		debug = {
-			enabled = true, -- we expect your collaboration at least during the beta
-			show_scores = true, -- to help us optimize the scoring system, feel free to share your scores!
+			enabled = true,
+		},
+		-- Configure grep to prioritize fuzzy mode
+		grep = {
+			modes = { "fuzzy", "regex", "plain" }, -- The first item sets the default
 		},
 	},
-	-- No need to lazy-load with lazy.nvim.
 	lazy = false,
 	keys = {
 		{
-			"<leader>f", -- try it if you didn't it is a banger keybinding for a picker
+			"<leader>f",
 			function()
 				require("fff").find_files()
 			end,

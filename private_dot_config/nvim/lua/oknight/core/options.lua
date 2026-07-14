@@ -1,3 +1,6 @@
+-- helps with lag when typing
+vim.g.loaded_matchparen = 1
+
 vim.o.ignorecase = true
 vim.o.encoding = "UTF-8"
 vim.o.incsearch = true
@@ -35,11 +38,24 @@ vim.o.smarttab = true
 vim.o.laststatus = 2
 vim.o.foldenable = true
 vim.o.foldlevel = 99
-vim.o.foldmethod = "expr"
-vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- disabled for perofmance
+-- vim.o.foldmethod = "expr"
+-- vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.o.foldtext = ""
 vim.opt.foldcolumn = "0"
-vim.opt.fillchars:append({ fold = " " })
+
+vim.opt.fillchars = {
+	eob = " ", -- Suppress the ~ at the End Of Buffer
+	fold = " ", -- The character that fills the fold line text gap
+	foldopen = "", -- Icon for expanded folds
+	foldclose = "", -- Icon for collapsed folds
+	foldsep = " ", -- The separator line character for nested folds
+}
+
+-- Only apply foldinner if your Neovim version supports it (v0.12+)
+if vim.fn.has("nvim-0.12") == 1 then
+	vim.opt.fillchars:append({ foldinner = " " })
+end
 
 vim.g.mapleader = " "
 vim.o.mouse = "a"

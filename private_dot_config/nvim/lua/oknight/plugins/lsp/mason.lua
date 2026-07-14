@@ -21,11 +21,7 @@ return {
 
 		mason_lspconfig.setup({
 			ensure_installed = {
-				"gopls",
 				"lua_ls",
-				"rust_analyzer",
-				"prettier",
-				"eslint_d",
 			},
 			automatic_installation = false,
 		})
@@ -33,9 +29,9 @@ return {
 		mason_tool_installer.setup({
 			ensure_installed = {
 				"stylua",
-				"staticcheck",
-				"goimports",
 				"js-debug-adapter",
+				"prettier",
+				"eslint_d",
 			},
 			auto_update = true,
 		})

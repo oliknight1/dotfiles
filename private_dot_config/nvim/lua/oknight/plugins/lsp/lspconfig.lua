@@ -10,16 +10,19 @@ return {
 		dependencies = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
+			"b0o/schemastore.nvim",
+			"saghen/blink.cmp",
 		},
 		keys = {
 			{ "K", lsp_float(vim.lsp.buf.hover), desc = "LSP Hover / Documentation" },
 			{ "<C-k>", lsp_float(vim.lsp.buf.signature_help), desc = "LSP Signature Help" },
-			{ "gR", "<cmd> Telescope lsp_references<CR>", desc = "Show LSP references (Telescope)" },
+			{ "gr", "<cmd>lua vim.lsp.buf.references()<CR>", desc = "Show LSP references" },
+			{ "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", desc = "Go to definition" },
 			{ "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", desc = "Go to declaration" },
-			{ "gi", "<Cmd>lua vim.lsp.buf.implementations()<CR>", desc = "Go to implementations" },
-			{ "gt", "<Cmd>lua vim.lsp.buf.type_definitions()<CR>", desc = "Go to type defintion" },
+			{ "gi", "<Cmd>lua vim.lsp.buf.implementation()<CR>", desc = "Go to implementations" },
+			{ "gt", "<Cmd>lua vim.lsp.buf.type_definition()<CR>", desc = "Go to type defintion" },
 			{ "<leader>ca", "<Cmd>lua vim.lsp.buf.code_action()<CR>", desc = "Code action" },
-			{ "<leader>rs", "<Cmd>LSPRestart<CR>", desc = "LSP Restart" },
+			{ "<leader>rs", "<Cmd>LspRestart<CR>", desc = "LSP Restart" },
 		},
 		config = function()
 			vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
@@ -32,6 +35,8 @@ return {
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 			local servers = {
+				bashls = {},
+				yamlls = {},
 				lua_ls = {
 					settings = {
 						Lua = {
@@ -46,17 +51,6 @@ return {
 						},
 					},
 				},
-				gopls = {
-					root_dir = require("lspconfig.util").root_pattern("go.work", "go.mod", ".git"),
-					settings = {
-						gopls = {
-							usePlaceholders = true,
-							completeUnimported = true,
-							analyses = { unusedparams = true },
-							staticcheck = true,
-						},
-					},
-				},
 				jsonls = {
 					root_dir = util.root_pattern(".git", "package.json", "tsconfig.json"),
 					settings = {
@@ -67,14 +61,25 @@ return {
 					},
 				},
 			}
+			require("mason-lspconfig").setup({
+				ensure_installed = vim.tbl_keys(servers),
+				handlers = {
+					function(server_name) -- Default handler
+						local conf = servers[server_name] or {}
+						conf.on_attach = on_attach
+						conf.capabilities = capabilities
+						lspconfig[server_name].setup(conf)
+					end,
+				},
+			})
 
-			for name, conf in pairs(servers) do
-				conf = vim.tbl_deep_extend("force", {
-					on_attach = on_attach,
-					capabilities = capabilities,
-				}, conf or {})
-				lspconfig[name].setup(conf)
-			end
+			-- for name, conf in pairs(servers) do
+			-- 	conf = vim.tbl_deep_extend("force", {
+			-- 		on_attach = on_attach,
+			-- 		capabilities = capabilities,
+			-- 	}, conf or {})
+			-- 	lspconfig[name].setup(conf)
+			-- end
 		end,
 	},
 }

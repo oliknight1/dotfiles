@@ -10,13 +10,6 @@ return {
 			-- example = "github",
 			sections = {
 				{ section = "header" },
-				{
-					pane = 2,
-					section = "terminal",
-					cmd = "colorscript -e square",
-					height = 5,
-					padding = 1,
-				},
 				{ section = "keys", gap = 1, padding = 1 },
 				{
 					pane = 2,
@@ -31,26 +24,6 @@ return {
 				function()
 					local in_git = Snacks.git.get_root() ~= nil
 					local cmds = {
-						{
-							title = "Open Issues",
-							cmd = "gh issue list -L 3",
-							key = "i",
-							action = function()
-								vim.fn.jobstart("gh issue list --web", { detach = true })
-							end,
-							icon = " ",
-							height = 7,
-						},
-						{
-							icon = " ",
-							title = "Open PRs",
-							cmd = "gh pr list -L 3",
-							key = "P",
-							action = function()
-								vim.fn.jobstart("gh pr list --web", { detach = true })
-							end,
-							height = 7,
-						},
 						{
 							icon = " ",
 							title = "Git Status",
@@ -86,7 +59,9 @@ return {
 		gitbrowse = { enabled = true },
 
 		scroll = { enabled = false },
+		image = { enabled = true },
 		dim = { enabled = true },
+		zen = { enabled = true },
 	},
 	keys = {
 		{
@@ -162,7 +137,7 @@ return {
 			desc = "Goto Declaration",
 		},
 		{
-			"gr",
+			"gR",
 			function()
 				Snacks.picker.lsp_references()
 			end,
@@ -206,11 +181,34 @@ return {
 			mode = { "n", "v" },
 		},
 		{
-			"<leader>sd",
+			"<leader>de",
 			function()
-				Snacks.dim()
+				Snacks.dim.enable()
 			end,
-			desc = "Snacks dim",
+			desc = "Snacks dim enable",
+			mode = { "n", "v" },
+		},
+		{
+			"<leader>dd",
+			function()
+				Snacks.dim.disable()
+			end,
+			desc = "Snacks dim disable",
+			mode = { "n", "v" },
+		},
+		{
+			"<leader>z",
+			function()
+				Snacks.zen({
+					toggles = {
+						dim = false,
+						git_signs = true,
+						mini_diff_signs = true,
+						diagnostics = true,
+					},
+				})
+			end,
+			desc = "Snacks zen",
 			mode = { "n", "v" },
 		},
 	},
